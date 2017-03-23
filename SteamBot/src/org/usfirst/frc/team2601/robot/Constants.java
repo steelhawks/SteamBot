@@ -2,7 +2,7 @@ package org.usfirst.frc.team2601.robot;
 
 //import com.ni.vision.NIVision.Image;
 
-import edu.wpi.first.wpilibj.CameraServer;
+//import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
+
 public class Constants {
     private static Constants instance = null;
 	
