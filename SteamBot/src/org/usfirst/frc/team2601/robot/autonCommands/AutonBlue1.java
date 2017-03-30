@@ -1,10 +1,17 @@
 package org.usfirst.frc.team2601.robot.autonCommands;
 
+import org.usfirst.frc.team2601.robot.Robot;
+import org.usfirst.frc.team2601.robot.commands.TimeDelay;
 import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPlease;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPleaseBack;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncoderBackward;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncoderForward;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.GyroTurnLeft;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.GyroTurnRight;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.Shift;
+import org.usfirst.frc.team2601.robot.commands.gear.GearPiston;
+import org.usfirst.frc.team2601.robot.commands.gear.PushGear;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -15,31 +22,25 @@ public class AutonBlue1 extends CommandGroup {
 
     public AutonBlue1() {
     	
-    	addSequential(new EncoderForward(4500));
-    	addSequential(new GyroTurnLeft(20));
-    	addSequential(new EncoderForward(1000));
-    	addSequential(new AlignGear());
-    	addSequential(new EncoderForward(200));
-    	addSequential(new EncoderBackward(500));
-    	addSequential(new GyroTurnRight(20));
-    	addSequential(new EncoderForward(4000));
-    	addSequential(new GyroTurnLeft(20));
-    	addSequential(new EncoderForward(500));
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
 
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+    	Robot.shooter.PIDAuton = false;
+    	Robot.drivetrain.gyro.zeroYaw();
+    	addSequential(new Shift());
+    	addSequential(new EncGyroPlease(1342,1500));//10foot 6in
+    	addSequential(new Shift());
+    	addSequential(new GyroTurnLeft(-53.2));
+    	addSequential(new Shift());
+    	//addSequential(new EncGyroPlease(3601,3480));//3601,3480
+    	//addSequential(new EncGyroPlease(2900,2780));//new
+    	addSequential(new TimeDelay(2.0));
+    	addSequential(new AlignGear());//new*/
+    	addSequential(new Shift());
+    	addSequential(new EncGyroPlease(701,700));//new
+    	addSequential(new GearPiston());//swapped
+    	addSequential(new TimeDelay(0.5));
+    	addSequential(new PushGear());//swapped
+    	addSequential(new TimeDelay(0.5));
+    	addSequential(new PushGear());
+    	addSequential(new EncGyroPleaseBack(1500,1900));    
     }
 }

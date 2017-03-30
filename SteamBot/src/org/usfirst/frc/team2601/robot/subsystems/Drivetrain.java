@@ -30,22 +30,22 @@ public class Drivetrain extends Subsystem {
 	public static int reverse = 1;
 	
 	//Instantiate Drive Motor Controllers
-	CANTalon frontLeftMotor = new CANTalon(constants.frontLeftM);
-	CANTalon middleLeftMotor = new CANTalon(constants.middleLeftM);
-	CANTalon backLeftMotor = new CANTalon(constants.backLeftM);	
-	CANTalon frontRightMotor = new CANTalon(constants.frontRightM);
-	CANTalon middleRightMotor = new CANTalon (constants.middleRightM);
-	CANTalon backRightMotor = new CANTalon(constants.backRightM);
+	public CANTalon frontLeftMotor = new CANTalon(constants.frontLeftM);
+	public CANTalon middleLeftMotor = new CANTalon(constants.middleLeftM);
+	public CANTalon backLeftMotor = new CANTalon(constants.backLeftM);	
+	public CANTalon frontRightMotor = new CANTalon(constants.frontRightM);
+	public CANTalon middleRightMotor = new CANTalon (constants.middleRightM);
+	public CANTalon backRightMotor = new CANTalon(constants.backRightM);
 
 	//DoubleSolenoid rightShift = new DoubleSolenoid(constants.shootShieldSolOn,constants.shootShieldSolOff);
-	DoubleSolenoid driveShift = new DoubleSolenoid(constants.driveSolOn,constants.driveSolOff);
+	public DoubleSolenoid driveShift = new DoubleSolenoid(constants.driveSolOn,constants.driveSolOff);
 	//Declare Robot drive
 	RobotDrive drive = new RobotDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
 	double leftMotorC;
 	double rightMotorC;
 	
 	//Ultrasonics
-	Ultrasonic gearUltra = new Ultrasonic(7, 6);
+	public Ultrasonic gearUltra = new Ultrasonic(7, 6);
 	double gearUltraValue;
 	
 	Ultrasonic climbUltra = new Ultrasonic(constants.climbUltraOutput, constants.climbUltraInput);
@@ -56,8 +56,11 @@ public class Drivetrain extends Subsystem {
 	public AHRS gyro = new AHRS(SPI.Port.kMXP);
 	double gyroRate;
 	double gyroAngle;	
-	double kP = 0.03;
-	
+	double kP = -0.095;//forward
+	double kPb = 0.07;//back
+	//more increase kp more left
+	//more decrease kp more right
+		
 	//Encoders	
 	public Encoder leftEnc = new Encoder(constants.leftEncPortI, constants.leftEncPortII, false, EncodingType.k4X);
 	double leftEncValue;
@@ -90,20 +93,14 @@ public class Drivetrain extends Subsystem {
 		climbUltra.setEnabled(true);
 		climbUltra.setAutomaticMode(true);
 		
+		constants.ultraBool = false;
+		
 		//ready Gyros
 		//gyro.initGyro(); this and calibrate are taken out to use the new gyro
 		gyro.reset();
-		//gyro.calibrate();
+		gyro.zeroYaw();
 		
-		//PID Controllers
-		//leftSide.enable();
-		//rightSide.enable();
-		
-		//leftSide.setPID(p, i, d);
-		//rightSide.setPID(p, i, d);
-		
-		// display shift on Smart Dashboard
-		//SmartDashboard.putBoolean("Low Gear", gear);
+    	//SmartDashboard.putDouble("kP", kP);
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -178,15 +175,58 @@ public class Drivetrain extends Subsystem {
     private void matchSolenoids(){
     	//driveShift.set(rightShift.get());
     }
-    
-    public void forwardGyroUltra(double distance){
+    public void EncGyroForward(double leftDist, double rightDist){
     	gyroAngle = gyro.getAngle();
-    	gearUltraValue = gearUltra.getRangeInches();
-    	drive.drive(0.75, gyroAngle*kP);
+    	
+    	leftEncDist = leftEnc.getDistance();
+    	rightEncDist = rightEnc.getDistance();
+    	System.out.println("Straight");
+    	System.out.println(gyroAngle);
+    	//double newK = SmartDashboard.getDouble("kP");
+    	drive.drive(-0.75, gyroAngle*kP);//*newkP);
     	matchMotors(frontLeftMotor, backLeftMotor);
     	//matchMotors(frontLeftMotor, middleLeftMotor);
     	matchMotors(frontRightMotor, backRightMotor);
     	//matchMotors(frontRightMotor, middleRightMotor);
+    	
+    	if(leftEncDist + 10 > leftDist && -rightEncDist + 10 > rightDist){
+    		constants.ultraBool = true;
+    	}
+    	if(leftEncDist + 10 <= leftDist && -rightEncDist + 10 <= rightDist){
+    		constants.ultraBool = false;
+    	}
+
+    }
+    public void EncGyroBackward(double leftDist, double rightDist){
+    	gyroAngle = gyro.getAngle();
+    	
+    	leftEncDist = leftEnc.getDistance();
+    	rightEncDist = rightEnc.getDistance();
+    	
+    	drive.drive(0.5, gyroAngle*kPb);
+    	matchMotors(frontLeftMotor, backLeftMotor);
+    	//matchMotors(frontLeftMotor, middleLeftMotor);
+    	matchMotors(frontRightMotor, backRightMotor);
+    	//matchMotors(frontRightMotor, middleRightMotor);
+    		
+    	if(-leftEncDist + 10 > leftDist && rightEncDist + 10 > rightDist){
+    		constants.ultraBool = true;
+    	}
+    	if(-leftEncDist + 10 <= leftDist && rightEncDist + 10 <= rightDist){
+    		constants.ultraBool = false;
+    	}
+
+
+    }
+
+    public void forwardGyroUltra(double distance){
+    	gyroAngle = gyro.getAngle();
+    	gearUltraValue = gearUltra.getRangeInches();
+    	drive.drive(-0.5, gyroAngle*kP);
+    	matchMotors(frontLeftMotor, backLeftMotor);
+    	matchMotors(frontLeftMotor, middleLeftMotor);
+    	matchMotors(frontRightMotor, backRightMotor);
+    	matchMotors(frontRightMotor, middleRightMotor);
     		
     	
     	if(gearUltraValue <= distance + constants.ultrasonicTolerance){
@@ -321,8 +361,8 @@ public class Drivetrain extends Subsystem {
     	}
     	/*if(gyroAngle < angle + 3)*/
     	else{
-    		frontLeftMotor.set(-0.5);
-    		frontRightMotor.set(-0.5);
+    		frontLeftMotor.set(0.5);
+    		frontRightMotor.set(0.5);
     		matchMotors(frontLeftMotor, backLeftMotor);
         	matchMotors(frontLeftMotor, middleLeftMotor);
         	matchMotors(frontRightMotor, backRightMotor);
@@ -361,10 +401,10 @@ public class Drivetrain extends Subsystem {
     public void stopMotors(){
     	frontLeftMotor.set(0);
 		frontRightMotor.set(0);
-		matchMotors(frontLeftMotor, backLeftMotor);
-    	matchMotors(frontLeftMotor, middleLeftMotor);
-    	matchMotors(frontRightMotor, backRightMotor);
-    	matchMotors(frontRightMotor, middleRightMotor);
+		backLeftMotor.set(0);
+    	middleLeftMotor.set(0);
+    	backRightMotor.set(0);
+    	middleRightMotor.set(0);
     }
     public void forwardUltra(double distance){
    

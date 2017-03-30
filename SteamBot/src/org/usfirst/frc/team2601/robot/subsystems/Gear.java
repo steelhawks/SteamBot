@@ -33,7 +33,7 @@ public class Gear extends Subsystem {
 			shieldS.set(DoubleSolenoid.Value.kForward);
 		}else{
 			piston.set(DoubleSolenoid.Value.kForward);
-			pushPiston.set(DoubleSolenoid.Value.kForward);
+			pushPiston.set(DoubleSolenoid.Value.kReverse);
 			shieldS.set(DoubleSolenoid.Value.kReverse);
 		}
 		gearLight.set(DoubleSolenoid.Value.kForward);

@@ -25,6 +25,7 @@ public class GyroTurnRight extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drivetrain.gyro.reset();
+    	Robot.drivetrain.gyro.zeroYaw();
 
     }
 

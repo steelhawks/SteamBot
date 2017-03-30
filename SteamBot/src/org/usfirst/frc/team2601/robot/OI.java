@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2601.robot;
 
+import org.usfirst.frc.team2601.robot.autonCommands.MoveToShoot;
 import org.usfirst.frc.team2601.robot.commands.EncoderHolder;
 import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
 import org.usfirst.frc.team2601.robot.commands.climber.ClimbButton;
@@ -36,11 +37,14 @@ public class OI {
 		constants.randJS = new Joystick(constants.randP);
 		
 		//Driver Controls
-    	Button shift = new JoystickButton(constants.dJS, constants.shiftB);
+    	Button moveToShoot = new JoystickButton(constants.dJS, constants.moveToShootB);
+    	moveToShoot.whenPressed(new MoveToShoot());
+		
+		Button shift = new JoystickButton(constants.dJS, constants.shiftB);
     	shift.whenPressed(new Shift());		
 		
     	Button gearAlign = new JoystickButton(constants.dJS, constants.gearAlignB);
-    	gearAlign.whenPressed(new AlignGear());
+    	//gearAlign.whenPressed(new AlignGear());
     	
     	Button reverse = new JoystickButton(constants.dJS, constants.reverseB);
     	reverse.whenPressed(new ReverseDirection());
@@ -50,11 +54,13 @@ public class OI {
     	gear.whenPressed(new GearPiston());
     	
     	Button shootSpeed = new JoystickButton(constants.oJS, constants.shootB);
-    	shootSpeed.whenPressed(new EncoderHolder());
+    	//shootSpeed.whenPressed(new EncoderHolder());
+    	shootSpeed.whileHeld(new EncoderHolder());
     	
     	Button agitator = new JoystickButton(constants.oJS, constants.shootB);
-    	agitator.whenPressed(new AgitatorMotorBoolean());
-    			
+    	//agitator.whenPressed(new AgitatorMotorBoolean());
+    	agitator.whileHeld(new AgitatorMotorBoolean());
+    	
     	Button stopShoot = new JoystickButton(constants.oJS, constants.stopShootB);
     	stopShoot.whenPressed(new StopShoot());
     	
@@ -69,6 +75,7 @@ public class OI {
     	
     	Button climb = new JoystickButton(constants.oJS, constants.climbB);
     	climb.whenPressed(new ClimbButton());
+    	//climb.whileHeld(new ClimbButton());
 	}
 	
 }

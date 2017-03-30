@@ -1,7 +1,15 @@
 package org.usfirst.frc.team2601.robot.autonCommands;
 
 import org.usfirst.frc.team2601.robot.commands.EncoderHolder;
+import org.usfirst.frc.team2601.robot.commands.TimeDelay;
 import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPlease;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.EncoderBackward;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.GyroTurnLeft;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.GyroTurnRight;
+import org.usfirst.frc.team2601.robot.commands.gear.GearPiston;
+import org.usfirst.frc.team2601.robot.commands.gear.PushGear;
+import org.usfirst.frc.team2601.robot.commands.shooter.ShootPIDAuton;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -12,9 +20,19 @@ public class AlignGearTest extends CommandGroup {
 
     public AlignGearTest() {
     	
-    	addSequential(new AlignGear());
+    	//addSequential(new AlignGear());
+    	//addSequential(new EncoderBackward(10000));
     	//addSequential(new EncoderHolder());
-        // Add Commands here:
+    	/*addSequential(new AlignGear());
+    	addSequential(new EncGyroPlease(301,300));
+    	addSequential(new GearPiston());//swapped
+    	addSequential(new TimeDelay(0.5));
+    	addSequential(new PushGear());//swapped
+    	addSequential(new TimeDelay(0.5));
+    	*/
+    	addSequential(new GyroTurnRight(50));
+    	addSequential(new GyroTurnLeft(-50));
+    	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.

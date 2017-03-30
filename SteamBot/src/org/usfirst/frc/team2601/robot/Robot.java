@@ -7,6 +7,7 @@ import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,6 +25,7 @@ import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3;
 import org.usfirst.frc.team2601.robot.commands.shooter.ShootPIDAuton;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed2;
+import org.usfirst.frc.team2601.robot.autonCommands.AutonRed2NOPUSH;
 import org.usfirst.frc.team2601.robot.subsystems.Camera;
 import org.usfirst.frc.team2601.robot.subsystems.Climber;
 import org.usfirst.frc.team2601.robot.subsystems.Drivetrain;
@@ -83,7 +85,7 @@ public class Robot extends IterativeRobot {
     	//shooterMotor.setReverseSoftLimit(-15.0);
     	//shooterMotor.setPosition(0);
     	shooterMotor.setF(0);
-    	shooterMotor.setP(32);//32
+    	shooterMotor.setP(16);//32
     	shooterMotor.setI(0.03125);//0.03125
     	shooterMotor.setD(0.012);//0.012
     	
@@ -99,25 +101,25 @@ public class Robot extends IterativeRobot {
         //Code below commented out due to error messages with the camera stream.
         //SmartDashboard smartDashboard = new SmartDashboard();
         
-       /* UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+        UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
         //UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture("cam1", 1);
         MjpegServer s = CameraServer.getInstance().addServer("gripStream");
         s.setSource(cam0);
-        cam0.setResolution(640, 480);*/        
+        cam0.setResolution(640, 480);        
         //cam1.setResolution(640, 480);    
         //System.out.println("hello");
         
         
         //Autonomous
         //chooser.addDefault("AlignGearTest", new AlignGearTest());
-        //chooser.addObject("AutonRedOne", new AutonRed1());
-        //chooser.addObject("AutonRedTwo", new AutonRed2());
-        //chooser.addObject("AutonRedThree", new AutonRed3());
+     /*   chooser.addObject("AutonRedOne", new AutonRed1());
+        chooser.addObject("AutonRedTwo", new AutonRed2());
+        chooser.addObject("AutonRedThree", new AutonRed3());
         //chooser.addObject("AutonBluOne", new AutonBlue1());
         //chooser.addObject("AutonBluTwo", new AutonBlue2());
         //chooser.addObject("AutonBluThree", new AutonBlue3());
         SmartDashboard.putData("Auto mode", chooser);
-        System.out.println("hi");
+        System.out.println("hi");*/
     }	
 	/**
      * This function is called once each time the robot enters Disabled mode.
@@ -138,24 +140,26 @@ public class Robot extends IterativeRobot {
 	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
 	 * below the Gyro
 	 *
+	 *
 	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = new AutonRed2();//(Command) chooser.getSelected();
-        autonomousCommand.start();
+       // autonomousCommand = (Command) chooser.getSelected();
+        //autonomousCommand = new AutonRed1();
+    	//autonomousCommand = new AutonRed2();
+        ///autonomousCommand = new AutonRed3();
+        //autonomousCommand = new AutonBlue1();
+        //autonomousCommand = new AutonBlue3();
+    	//autonomousCommand = new AutonRed2NOPUSH();
+    	autonomousCommand = new AlignGearTest();
+    	autonomousCommand.start(); 
         //SmartDashboard.putData("Auto mode", chooser);
-        
-		/*String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
+    	shooterMotor.setF(0);
+    	shooterMotor.setP(16);//32
+    	shooterMotor.setI(0.03125);//0.03125
+    	shooterMotor.setD(0.012);//0.012
+    	
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
@@ -169,10 +173,12 @@ public class Robot extends IterativeRobot {
         
         if(Robot.shooter.PIDAuton == true) {
 			System.out.println(shooterMotor.getClosedLoopError());
-			shooterMotor.set(-1675);
-		}
+			shooterMotor.set(-7537.5);//-1675
+			
+        }
 		else{
 			shooterMotor.set(0);
+			
 		}
 		if (Robot.shooter.PIDAuton == false) {
 			agitatorMotor.set(0);
@@ -182,6 +188,8 @@ public class Robot extends IterativeRobot {
 		if(Robot.shooter.PIDAuton == true && err < 2 && err > -3) {
 			System.out.println("turn on conveyor " + err);
 			agitatorMotor.set(-1);
+		}else{
+			agitatorMotor.set(0.1);
 		}
 		
 
@@ -201,27 +209,30 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        
         if (Constants.oJS.getRawButton(1)) {
-			System.out.println(shooterMotor.getClosedLoopError());
+        	//agitatorMotor.set(1);
+        	System.out.println(shooterMotor.getClosedLoopError());
 			shooterMotor.set(-1675);
+			
 		}
 		else {
 			shooterMotor.set(0);
+		}
+		if (Constants.oJS.getRawButton(3)) {
+			
 			agitatorMotor.set(0);
 		}
-		if (Constants.oJS.getRawButton(1)) {
-			agitatorMotor.set(0);
-			shooterMotor.set(0);
-		}
-		/*else {
-			agitatorMotor.set(0);
-		}*/
+		
 //		Timer.delay(0.005); // wait for a motor update time
 		
 		int err = shooterMotor.getClosedLoopError();
 		if (Constants.oJS.getRawButton(1) && err < 2 && err > -3) {
 			System.out.println("turn on conveyor " + err);
-			agitatorMotor.set(-1);
+			Timer.delay(0.5);
+			agitatorMotor.set(-0.85);
+		}else{
+			
 		}
 
 

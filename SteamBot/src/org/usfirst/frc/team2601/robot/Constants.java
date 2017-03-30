@@ -35,10 +35,11 @@ public class Constants {
 	
 	//Driver Buttons
 	public final static int shiftB = 1;
-	public final static int gearAlignB = 4;
+	public final static int gearAlignB = 10;
 	public final static int reverseB = 3;
 	public final static int frontCamB = 7;
 	public final static int backCamB = 8;
+	public final static int moveToShootB = 11;
 	
 	//Operator Buttons
 	public final static int gearB = 10;
@@ -46,7 +47,7 @@ public class Constants {
 	public final static int shootB = 5;
 	public final static int pushGearB = 4;
 	public final static int gearPanelB = 6;
-	public final static int climbB = 11;
+	public final static int climbB = 9;
 	public final static int hopperB = 8;
 	
 	
@@ -69,12 +70,12 @@ public class Constants {
 	//Shifting Solenoids
 	public final static int driveSolOn = 0;
 	public final static int driveSolOff = 1;
-	public final static int shootShieldSolOn = 2;
-	public final static int shootShieldSolOff = 3;
-	public final static int gearSolOn = 4;
-	public final static int gearSolOff = 5;
-	public final static int pushGearOn = 6;
-	public final static int pushGearOff = 7;
+	public final static int shootShieldSolOn = 4;//2
+	public final static int shootShieldSolOff = 5;//3
+	public final static int gearSolOn = 6;//4
+	public final static int gearSolOff = 7;//5
+	public final static int pushGearOn = 2;//6
+	public final static int pushGearOff = 3;//7
 	
 	public final static int hopperOn = 0;
 	public final static int hopperOff = 1;
@@ -99,13 +100,14 @@ public class Constants {
 	public boolean moveUltra;
 
 	//encoders
-	public final static int leftEncPortI = 4;
-	public final static int leftEncPortII = 5;
-	public final static int rightEncPortI = 2;
-	public final static int rightEncPortII = 3;
+	public final static int leftEncPortI = 2;
+	public final static int leftEncPortII = 3;
+	public final static int rightEncPortI = 4;
+	public final static int rightEncPortII = 5;
 	public final static int shootEncPortI = 8;
 	public final static int shootEncPortII = 9;
 	
+	public boolean ultraBool;
 	public boolean moveEnc;
 	
 	//Gyros

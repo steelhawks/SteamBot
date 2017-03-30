@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 /**
  *
  */
-
+//stean
 public class Camera extends Subsystem {
 
     // Put methods for controlling this subsystem
@@ -39,11 +39,13 @@ public class Camera extends Subsystem {
 	Servo servo = new Servo(constants.camServo);
 	
 	public boolean align = false;
+	public ArrayList<Double> k = new ArrayList<Double>(2);
+	public int i = 0;
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new CamServo());
+    	//setDefaultCommand(new CamServo());
     }
     //Moves servo to given position
     public void cameraServo(Joystick stick){
@@ -53,71 +55,73 @@ public class Camera extends Subsystem {
     
     //Vision
     public void getGearPosition(){
-/*    	NetworkTable server = NetworkTable.getTable("GRIP/myContoursReport");
-   
-    	align = false;
+    	NetworkTable server = NetworkTable.getTable("GRIP/myContoursReport");
     	
-    	double gearMid = 263;
     	
     	Double[] smth = new Double[2];
-		//smth[0] = 1.0;
+		smth[0] = 1.0;
+		Double[] smth2 = new Double[2];
+		smth[0] = 1.0;
 		Double[] xValues = new Double[2];
-		ArrayList<Double> k = new ArrayList<Double>(2);
+		Double[] height = new Double[xValues.length];
 		//19.5 cm
 		try{
     		xValues = server.getNumberArray("centerX", smth);
+    		//height = server.getNumberArray("height", smth2);
     		System.out.println("got values");
+    		
     	}
     	catch(TableKeyNotDefinedException exp){
     		System.out.println("No Values");
     	}
 		
-		for(int i = 0; i < xValues.length; i++){
-			if((xValues[i] >= k.get(i) + 10) || (xValues[i] <= k.get(i) - 10)){
-				k.add(xValues[i]);
+			try{
+				System.out.println("PAST IF");
+		    	double gearMid = 320;
+				double mid = Math.abs((xValues[0] + xValues[1])/2);
+				double offset = 3;
+				
+				SmartDashboard.putBoolean("aligned", align);
+				if(mid > gearMid + offset){//turn left
+					System.out.println("Right");
+					Robot.drivetrain.frontLeftMotor.set(-0.15);
+					Robot.drivetrain.frontRightMotor.set(-0.15);
+		    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
+		        	//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
+		        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
+		        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
+		        	System.out.println(xValues[0]);
+		    		System.out.println(xValues[1]);	
+				
+			    	align = false;
+			    }else if(mid < gearMid - offset){//turn right
+					System.out.println("Left");
+					Robot.drivetrain.frontLeftMotor.set(0.15);
+					Robot.drivetrain.frontRightMotor.set(0.15);
+		    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
+		        	//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
+		        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
+		        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
+		        	System.out.println(xValues[0]);
+		    		System.out.println(xValues[1]);	
+				
+			    	align = false;
+			    }else if(mid >= (gearMid + offset) || mid >= (gearMid - offset) || gearMid == mid){
+					Robot.drivetrain.frontLeftMotor.set(0);
+					Robot.drivetrain.frontRightMotor.set(0);
+		    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
+		        	matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
+		        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
+		        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
+		        	System.out.println("stop" + i );
+			    	align = true;
+				}
+				System.out.println(mid);
 			}
-		}		
-		if(k.size() == 2 && (k.get(0) < 590 && k.get(0) > 320)){
-			double mid = (xValues[0] + xValues[1])/2;
-			double offset = 10;
-			
-			SmartDashboard.putBoolean("aligned", align);
-			if(mid > gearMid + offset){//turn left
-				Robot.drivetrain.frontLeftMotor.set(0.25);
-				Robot.drivetrain.frontRightMotor.set(0.25);
-	    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
-	        	matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
-	        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
-	        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
-	        }
-			if(mid < gearMid - offset){//turn right
-				Robot.drivetrain.frontLeftMotor.set(-0.25);
-				Robot.drivetrain.frontRightMotor.set(-0.25);
-	    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
-	        	matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
-	        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
-	        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
+			catch(TableKeyNotDefinedException exp){
+				System.out.println("No values");
 			}
-			if(mid <= (gearMid + offset) || mid >= (gearMid - offset) || gearMid == mid){
-				Robot.drivetrain.frontLeftMotor.set(0);
-				Robot.drivetrain.frontRightMotor.set(0);
-	    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
-	        	matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
-	        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
-	        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
-	        	align = true;
-			}
-		}
-		else{
-			System.out.println(k.size());
-			Robot.drivetrain.frontLeftMotor.set(0);
-			Robot.drivetrain.frontRightMotor.set(0);
-    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
-        	matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
-        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
-        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
-		}
-		*///NULL POINTER EXCEPTION
+			i++;		
 	}    
     private void matchMotors(CANTalon leader, CANTalon follower){
     	follower.set(leader.get());
