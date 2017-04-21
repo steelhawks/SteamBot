@@ -6,6 +6,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,6 +23,7 @@ import org.usfirst.frc.team2601.robot.autonCommands.AutonBlue3;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonBlue2;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed1;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3;
+import org.usfirst.frc.team2601.robot.autonCommands.HopperShooter;
 import org.usfirst.frc.team2601.robot.commands.shooter.ShootPIDAuton;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed2;
@@ -55,14 +57,15 @@ public class Robot extends IterativeRobot {
 	public static final Gear gear = new Gear();
 	public static final Shooter shooter = new Shooter();
 	public static final Climber climber = new Climber();
-    
+	public static final Compressor compressor = new Compressor();
+
 	//Declare Command based structure classes
     Command autonomousCommand;
     SendableChooser chooser;
     
 	CANTalon shooterMotor = new CANTalon(6);//8 beta
 	CANTalon shooterMotor2 = new CANTalon(8);//6 beta
-	CANTalon agitatorMotor = new CANTalon(9);
+	CANTalon agitatorMotor = new CANTalon(10);
     
 
     /**
@@ -101,25 +104,29 @@ public class Robot extends IterativeRobot {
         //Code below commented out due to error messages with the camera stream.
         //SmartDashboard smartDashboard = new SmartDashboard();
         
-        UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+     
+        //UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
         //UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture("cam1", 1);
-        MjpegServer s = CameraServer.getInstance().addServer("gripStream");
-        s.setSource(cam0);
-        cam0.setResolution(640, 480);        
+        //MjpegServer s = CameraServer.getInstance().addServer("gripStream");
+        //s.setSource(cam0);
+        //cam0.setResolution(640, 480); // look into lowering       
+        //cam0.setExposureManual(10);
+        //cam0.setBrightness(0);
+        
         //cam1.setResolution(640, 480);    
         //System.out.println("hello");
         
         
         //Autonomous
         //chooser.addDefault("AlignGearTest", new AlignGearTest());
-     /*   chooser.addObject("AutonRedOne", new AutonRed1());
+        chooser.addObject("AutonRedOne", new AutonRed1());
         chooser.addObject("AutonRedTwo", new AutonRed2());
         chooser.addObject("AutonRedThree", new AutonRed3());
         //chooser.addObject("AutonBluOne", new AutonBlue1());
         //chooser.addObject("AutonBluTwo", new AutonBlue2());
         //chooser.addObject("AutonBluThree", new AutonBlue3());
         SmartDashboard.putData("Auto mode", chooser);
-        System.out.println("hi");*/
+        System.out.println("hi");
     }	
 	/**
      * This function is called once each time the robot enters Disabled mode.
@@ -146,13 +153,14 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
        // autonomousCommand = (Command) chooser.getSelected();
-        //autonomousCommand = new AutonRed1();
+        autonomousCommand = new AutonRed1();
     	//autonomousCommand = new AutonRed2();
-        ///autonomousCommand = new AutonRed3();
+    	//autonomousCommand = new AutonRed3();
         //autonomousCommand = new AutonBlue1();
         //autonomousCommand = new AutonBlue3();
     	//autonomousCommand = new AutonRed2NOPUSH();
-    	autonomousCommand = new AlignGearTest();
+    	//autonomousCommand = new AlignGearTest();
+    	//autonomousCommand = new HopperShooter();
     	autonomousCommand.start(); 
         //SmartDashboard.putData("Auto mode", chooser);
     	shooterMotor.setF(0);
@@ -160,6 +168,7 @@ public class Robot extends IterativeRobot {
     	shooterMotor.setI(0.03125);//0.03125
     	shooterMotor.setD(0.012);//0.012
     	
+    	//Robot.shooter.PIDAuton = false;
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
@@ -173,25 +182,23 @@ public class Robot extends IterativeRobot {
         
         if(Robot.shooter.PIDAuton == true) {
 			System.out.println(shooterMotor.getClosedLoopError());
-			shooterMotor.set(-7537.5);//-1675
-			
+			shooterMotor.set(-1675);//-1675
         }
 		else{
 			shooterMotor.set(0);
-			
 		}
 		if (Robot.shooter.PIDAuton == false) {
 			agitatorMotor.set(0);
+			shooterMotor.set(0);
 		}
 		
 		int err = shooterMotor.getClosedLoopError();
 		if(Robot.shooter.PIDAuton == true && err < 2 && err > -3) {
 			System.out.println("turn on conveyor " + err);
-			agitatorMotor.set(-1);
+			agitatorMotor.set(-0.85);
 		}else{
-			agitatorMotor.set(0.1);
-		}
-		
+			//agitatorMotor.set(0.1);
+		} //commented out because there is no agitator motor for now	
 
     }
 
@@ -202,6 +209,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         Robot.drivetrain.gyro.reset();
+        Robot.drivetrain.gyro.zeroYaw();
      }
 
     /**
@@ -214,13 +222,14 @@ public class Robot extends IterativeRobot {
         	//agitatorMotor.set(1);
         	System.out.println(shooterMotor.getClosedLoopError());
 			shooterMotor.set(-1675);
-			
+			//agitatorMotor.set(-0.85);
 		}
 		else {
 			shooterMotor.set(0);
 		}
 		if (Constants.oJS.getRawButton(3)) {
-			
+			agitatorMotor.set(-0.85);
+		}else{
 			agitatorMotor.set(0);
 		}
 		
@@ -230,10 +239,10 @@ public class Robot extends IterativeRobot {
 		if (Constants.oJS.getRawButton(1) && err < 2 && err > -3) {
 			System.out.println("turn on conveyor " + err);
 			Timer.delay(0.5);
-			agitatorMotor.set(-0.85);
+			//agitatorMotor.set(-0.85);
 		}else{
-			
-		}
+			//agitatorMotor.set(0.1);;
+		} 
 
 
     }

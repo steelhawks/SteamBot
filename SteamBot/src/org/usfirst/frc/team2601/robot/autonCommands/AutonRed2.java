@@ -33,15 +33,19 @@ public class AutonRed2 extends CommandGroup {
     	
     	Robot.shooter.PIDAuton = false;
     	Robot.drivetrain.gyro.zeroYaw();
+    	//addParallel(new ShootPIDAuton(0.1));
     	addParallel(new Shift());
     	addSequential(new TimeDelay(0.5));
     	//addSequential(new EncGyroPlease(3201,3080));//3601,3480
     	//addSequential(new EncGyroPlease(2900,2780));//when using low gear
-    	addSequential(new EncGyroPlease(2500,2380));
-    	addParallel(new Shift());
-    	//addSequential(new TimeDelay(2.0));//new
-    	//addSequential(new AlignGear());//new
-    	addSequential(new EncGyroPlease(701,700));//new
+    	//addSequential(new EncGyroPlease(2500,2380));//ALPHAAAAAAAAAAAAAAAAAA
+    	addSequential(new EncGyroPlease(2200,2200));//Beta
+    	addSequential(new Shift());
+    	addSequential(new TimeDelay(0.5));
+    	addSequential(new AlignGear());//new*/
+    	addSequential(new Shift());
+    	addSequential(new AlignGear());//new
+    	addSequential(new EncGyroPlease(401,400));//new
     	addSequential(new GearPiston());//swapped
     	addSequential(new TimeDelay(0.5));
     	addSequential(new PushGear());//swapped

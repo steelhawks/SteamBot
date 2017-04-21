@@ -4,6 +4,7 @@ import org.usfirst.frc.team2601.robot.autonCommands.MoveToShoot;
 import org.usfirst.frc.team2601.robot.commands.EncoderHolder;
 import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
 import org.usfirst.frc.team2601.robot.commands.climber.ClimbButton;
+import org.usfirst.frc.team2601.robot.commands.climber.ClimbButtonStop;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.ArcadeDrive;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.ReverseDirection;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.Shift;
@@ -44,7 +45,7 @@ public class OI {
     	shift.whenPressed(new Shift());		
 		
     	Button gearAlign = new JoystickButton(constants.dJS, constants.gearAlignB);
-    	//gearAlign.whenPressed(new AlignGear());
+    	gearAlign.whenPressed(new AlignGear());
     	
     	Button reverse = new JoystickButton(constants.dJS, constants.reverseB);
     	reverse.whenPressed(new ReverseDirection());
@@ -74,9 +75,13 @@ public class OI {
     	gearPanel.whenPressed(new GearPanel());
     	
     	Button climb = new JoystickButton(constants.oJS, constants.climbB);
-    	climb.whenPressed(new ClimbButton());
+    	//climb.whenPressed(new ClimbButton());
     	//climb.whileHeld(new ClimbButton());
-	}
+    	//climb.whileActive(new ClimbButton());
+    	climb.whenActive(new ClimbButton());
+    	climb.whenInactive(new ClimbButtonStop());
+    	
+    	}
 	
 }
 

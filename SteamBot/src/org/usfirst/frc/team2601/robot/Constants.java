@@ -44,10 +44,10 @@ public class Constants {
 	//Operator Buttons
 	public final static int gearB = 10;
 	public final static int stopShootB = 15;
-	public final static int shootB = 5;
+	public final static int shootB = 5;//NOT USED
 	public final static int pushGearB = 4;
 	public final static int gearPanelB = 6;
-	public final static int climbB = 9;
+	public final static int climbB = 5;
 	public final static int hopperB = 8;
 	
 	
@@ -62,11 +62,11 @@ public class Constants {
 	//shooter motors
 	public final static int shooterM = 6;
 	public final static int shooterM2 = 8;
-	public final static int agitateM = 9;
+	//public final static int agitateM = 9;
 	
 	//climber motors
 	public final static int climbM = 7;
-	
+	public final static int climbM2 = 9;
 	//Shifting Solenoids
 	public final static int driveSolOn = 0;
 	public final static int driveSolOff = 1;

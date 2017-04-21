@@ -33,7 +33,7 @@ public class Shooter extends Subsystem {
 	//Instantiate the motors for shooter and conveyor belt
 	public CANTalon shooterMotor = new CANTalon(constants.shooterM);
 	public CANTalon shooterMotor2 = new CANTalon(constants.shooterM2);
-	public CANTalon agitatorMotor = new CANTalon(constants.agitateM);	
+	//public CANTalon agitatorMotor = new CANTalon(constants.agitateM);	
 
 	boolean shield;
 	public boolean PIDAuton;
