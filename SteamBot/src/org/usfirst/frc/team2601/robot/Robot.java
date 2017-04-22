@@ -161,7 +161,7 @@ public class Robot extends IterativeRobot {
     	//autonomousCommand = new AutonRed2NOPUSH();
     	//autonomousCommand = new AlignGearTest();
     	//autonomousCommand = new HopperShooter();
-    	autonomousCommand.start(); 
+    	autonomousCommand.start();
         //SmartDashboard.putData("Auto mode", chooser);
     	shooterMotor.setF(0);
     	shooterMotor.setP(16);//32
