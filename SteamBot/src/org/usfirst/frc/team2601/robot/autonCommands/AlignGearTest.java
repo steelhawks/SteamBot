@@ -5,6 +5,7 @@ import org.usfirst.frc.team2601.robot.commands.TimeDelay;
 import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPlease;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncoderBackward;
+import org.usfirst.frc.team2601.robot.commands.drivetrain.GyroLock;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.GyroTurnLeft;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.GyroTurnRight;
 import org.usfirst.frc.team2601.robot.commands.gear.GearPiston;
@@ -30,8 +31,14 @@ public class AlignGearTest extends CommandGroup {
     	addSequential(new PushGear());//swapped
     	addSequential(new TimeDelay(0.5));
     	*/
-    	addSequential(new GyroTurnRight(50));
-    	addSequential(new GyroTurnLeft(-50));
+    	//addSequential(new ShootPIDAuton(0.1));
+    	//addSequential(new TimeDelay(3.0));
+    //	addSequential(new ShootPIDAuton(0.1));
+    	//addSequential(new GyroLock(30));
+    	//addSequential(new GyroTurnLeft(-30));
+    	//addSequential(new GyroTurnRight(30));
+    	addSequential(new EncGyroPlease(5000,5000));
+    	//41 clicks per inch
     	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

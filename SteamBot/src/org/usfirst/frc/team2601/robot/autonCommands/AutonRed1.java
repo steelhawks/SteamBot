@@ -29,16 +29,16 @@ public class AutonRed1 extends CommandGroup {
     	Robot.shooter.PIDAuton = false;
     	Robot.drivetrain.gyro.zeroYaw();
     	addSequential(new Shift());
-    	addSequential(new EncGyroPlease(1342,1500));//10foot 6in
+    	addSequential(new EncGyroPlease(4208,4208));//10foot 6in
     	addSequential(new Shift());
-    	addSequential(new GyroTurnRight(53.2));
-    	addSequential(new Shift());
+    	addSequential(new GyroTurnRight(56));//45
+    	//addSequential(new Shift());
     	//addSequential(new EncGyroPlease(3601,3480));//3601,3480
     	//addSequential(new EncGyroPlease(2900,2780));//new
-    	addSequential(new TimeDelay(2.0));
+    	addSequential(new TimeDelay(0.5));
     	addSequential(new AlignGear());//new*/
     	addSequential(new Shift());
-    	addSequential(new EncGyroPlease(701,700));//new
+    	addSequential(new EncGyroPlease(601,600));//new
     	addSequential(new GearPiston());//swapped
     	addSequential(new TimeDelay(0.5));
     	addSequential(new PushGear());//swapped

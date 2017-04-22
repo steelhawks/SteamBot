@@ -35,7 +35,7 @@ public class AutonRed2NOPUSH extends CommandGroup {
     	addSequential(new TimeDelay(0.5));
     	//addSequential(new AutonGyroForwardUltra(7));// <-- this is commented out due to inconsistency
     	//System.out.println(Robot.drivetrain.gearUltra.getRangeInches());
-    	addSequential(new EncGyroPlease(3601,3480));//3601,3480
+    	addSequential(new EncGyroPlease(6601,6480));//3601,3480
     	//addSequential(new EncoderBackward(2700));
     	//Robot.drivetrain.stopMotors();
     	//addSequential(new GearPiston());//swapped
