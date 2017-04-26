@@ -61,9 +61,7 @@ public class Drivetrain extends Subsystem {
 	// Gyros
 	//public AnalogGyro gyro = new AnalogGyro(0); //- KoP
 	// Gyro (Replaced)
-	//public AHRS gyro = new AHRS(SPI.Port.kMXP);
-	
-	public AHRS gyro = new AHRS(SerialPort.Port.kUSB);/*I2C.Port.kMXP);*/
+	public AHRS gyro = new AHRS(SPI.Port.kMXP);
 	double gyroRate;
 	double gyroAngle;
 	double kP = 0.03;// forward             -0.095-alpha
@@ -157,13 +155,7 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putDouble("frontLeftMotorVoltage", frontLeftMotor.getOutputCurrent());
 		SmartDashboard.putDouble("frontRightMotorVoltage", frontRightMotor.getOutputCurrent());
 
-		// Output sensor values to SD
-		gearUltraValue = gearUltra.getRangeInches();
-		SmartDashboard.putNumber("UltrasonicGearDistance", gearUltraValue);
-
-		climbUltraValue = climbUltra.getRangeInches();
-		SmartDashboard.putNumber("UltrasonicClimbDistance", climbUltraValue);
-
+		
 		gyroAngle = gyro.getAngle();
 		SmartDashboard.putNumber("GyroAngle", gyroAngle);
 		SmartDashboard.putNumber("GetBoardAxis", gyro.getBoardYawAxis().board_axis.getValue());

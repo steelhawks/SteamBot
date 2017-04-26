@@ -36,13 +36,12 @@ public class HopperShooter extends CommandGroup {
     	addSequential(new Shift());
     	addSequential(new EncGyroPlease(1476,1476));
     	addSequential(new Shift());
-    	addSequential(new GyroTurnLeft(-20));
+    	addSequential(new GyroTurnRight(180));
     	addSequential(new Shift());
-    	addSequential(new EncGyroPlease(1000,1000));
+    	addSequential(new EncGyroPleaseBack(1000,1000));
     	addSequential(new ShootPIDAuton(0.1));
     	addSequential(new TimeDelay(3.0));
     	addSequential(new ShootPIDAuton(0.1));
     	
-    	    	
     }
 }

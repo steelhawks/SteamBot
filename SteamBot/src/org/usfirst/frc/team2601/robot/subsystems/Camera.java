@@ -120,8 +120,8 @@ public class Camera extends Subsystem {
 			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
 					}
 					else{*/
-						Robot.drivetrain.frontLeftMotor.set(-0.2);//-0.15
-						Robot.drivetrain.frontRightMotor.set(-0.2);
+						Robot.drivetrain.frontLeftMotor.set(-0.25);//-0.15
+						Robot.drivetrain.frontRightMotor.set(-0.25);
 			    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
 			        	//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
 			        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
@@ -140,8 +140,8 @@ public class Camera extends Subsystem {
 			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
 					}
 					else{*/
-						Robot.drivetrain.frontLeftMotor.set(0.2);//0.15
-						Robot.drivetrain.frontRightMotor.set(0.2);
+						Robot.drivetrain.frontLeftMotor.set(0.25);//0.15
+						Robot.drivetrain.frontRightMotor.set(0.25);
 			    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
 			        	//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
 			        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);

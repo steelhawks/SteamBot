@@ -105,13 +105,13 @@ public class Robot extends IterativeRobot {
         //SmartDashboard smartDashboard = new SmartDashboard();
         
      
-        //UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+        UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
         //UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture("cam1", 1);
         //MjpegServer s = CameraServer.getInstance().addServer("gripStream");
         //s.setSource(cam0);
-        //cam0.setResolution(640, 480); // look into lowering       
-        //cam0.setExposureManual(10);
-        //cam0.setBrightness(0);
+        cam0.setResolution(640, 480); // look into lowering       
+        //cam1.setExposureManual(10);
+        //cam1.setBrightness(0);
         
         //cam1.setResolution(640, 480);    
         //System.out.println("hello");
@@ -153,13 +153,13 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
        // autonomousCommand = (Command) chooser.getSelected();
-        autonomousCommand = new AutonRed1();
+        //autonomousCommand = new AutonRed1();
     	//autonomousCommand = new AutonRed2();
     	//autonomousCommand = new AutonRed3();
         //autonomousCommand = new AutonBlue1();
         //autonomousCommand = new AutonBlue3();
     	//autonomousCommand = new AutonRed2NOPUSH();
-    	//autonomousCommand = new AlignGearTest();
+    	autonomousCommand = new AlignGearTest();
     	//autonomousCommand = new HopperShooter();
     	autonomousCommand.start();
         //SmartDashboard.putData("Auto mode", chooser);

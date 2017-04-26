@@ -35,9 +35,9 @@ public class AlignGearTest extends CommandGroup {
     	//addSequential(new TimeDelay(3.0));
     //	addSequential(new ShootPIDAuton(0.1));
     	//addSequential(new GyroLock(30));
-    	//addSequential(new GyroTurnLeft(-30));
+    	addSequential(new GyroTurnLeft(-30));
     	//addSequential(new GyroTurnRight(30));
-    	addSequential(new EncGyroPlease(5000,5000));
+    	//addSequential(new EncGyroPlease(5000,5000));
     	//41 clicks per inch
     	// Add Commands here:
         // e.g. addSequential(new Command1());
