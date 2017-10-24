@@ -31,7 +31,7 @@ public class AutonRed1 extends CommandGroup {
     	addSequential(new Shift());
     	addSequential(new EncGyroPlease(4208,4208));//10foot 6in
     	addSequential(new Shift());
-    	addSequential(new GyroTurnRight(56));//45
+    	addSequential(new GyroTurnLeft(-59.79));
     	//addSequential(new Shift());
     	//addSequential(new EncGyroPlease(3601,3480));//3601,3480
     	//addSequential(new EncGyroPlease(2900,2780));//new

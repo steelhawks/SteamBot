@@ -93,11 +93,11 @@ public class Camera extends Subsystem {
 			//Imgproc.boundingRect(points)
     		xValues = server.getNumberArray("centerX", smth);
     		//height = server.getNumberArray("height", smth2);
-    		System.out.println("got values");
+    		//System.out.println("got values");
     		
     	}
     	catch(TableKeyNotDefinedException exp){
-    		System.out.println("No Values");
+    		//System.out.println("No Values");
     		//throw exp;
     	}
 		
@@ -110,7 +110,7 @@ public class Camera extends Subsystem {
 				
 				SmartDashboard.putBoolean("aligned", align);
 				if(mid > gearMid + offset){//turn left
-					System.out.println("Right");
+					//System.out.println("Right");
 					/*if(constants.alpha == false){
 						Robot.drivetrain.frontLeftMotor.set(0.15);
 						Robot.drivetrain.frontRightMotor.set(-0.15);
@@ -120,8 +120,8 @@ public class Camera extends Subsystem {
 			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
 					}
 					else{*/
-						Robot.drivetrain.frontLeftMotor.set(-0.25);//-0.15
-						Robot.drivetrain.frontRightMotor.set(-0.25);
+						Robot.drivetrain.frontLeftMotor.set(-0.15);//-0.15
+						Robot.drivetrain.frontRightMotor.set(-0.15);
 			    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
 			        	//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
 			        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
@@ -130,7 +130,7 @@ public class Camera extends Subsystem {
 			    	
 			    	align = false;
 			    }else if(mid < gearMid - offset){//turn right
-					System.out.println("Left");
+					//System.out.println("Left");
 					/*if(constants.alpha == false){
 						Robot.drivetrain.frontLeftMotor.set(-0.15);
 						Robot.drivetrain.frontRightMotor.set(0.15);
@@ -140,8 +140,8 @@ public class Camera extends Subsystem {
 			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
 					}
 					else{*/
-						Robot.drivetrain.frontLeftMotor.set(0.25);//0.15
-						Robot.drivetrain.frontRightMotor.set(0.25);
+						Robot.drivetrain.frontLeftMotor.set(0.15);//0.15
+						Robot.drivetrain.frontRightMotor.set(0.15);
 			    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
 			        	//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
 			        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
@@ -162,7 +162,7 @@ public class Camera extends Subsystem {
 				
 			}
 			catch(ArrayIndexOutOfBoundsException exp){
-				System.out.println("No values being published");
+				//System.out.println("No values being published");
 			}
 			
 			i++;

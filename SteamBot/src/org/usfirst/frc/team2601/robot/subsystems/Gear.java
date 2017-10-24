@@ -4,8 +4,10 @@ import org.usfirst.frc.team2601.robot.Constants;
 import org.usfirst.frc.team2601.robot.Robot;
 import org.usfirst.frc.team2601.robot.commands.gear.GearPiston;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,6 +17,9 @@ public class Gear extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	Constants constants = new Constants().getInstance();
+	
+	public AnalogInput ir1 = new AnalogInput(0);
+	public AnalogInput ir2 = new AnalogInput(1);
 	
 	//Instantiate the solenoids
 	DoubleSolenoid piston = new DoubleSolenoid(0,constants.gearSolOn, constants.gearSolOff);
@@ -44,6 +49,21 @@ public class Gear extends Subsystem {
     	//setDefaultCommand();
     }
     
+    public boolean isPeg(){
+    	int i=0;
+    	while(true){
+	   		if((ir1.getValue() > 650) == true){
+	    		i++;
+	    		if(i > 10){
+	    			return true;
+	    		}
+	    	}else{
+    			return false;
+    		}
+    	}	
+    }
+   
+    
     //Method for using the pistons for hopper
     public void hopperPiston(){
     	if(hopper.get() == DoubleSolenoid.Value.kForward){
@@ -66,8 +86,7 @@ public class Gear extends Subsystem {
 	    	if(Robot.drivetrain.gearUltraValue > 2.5 + constants.ultrasonicTolerance){
 	    		gearLight.set(DoubleSolenoid.Value.kForward);
 	    	}
-	    
-    }
+	  }
     //Method for using the piston to push gear out
     public void gearPush(){
     	if (pushPiston.get() == DoubleSolenoid.Value.kForward){

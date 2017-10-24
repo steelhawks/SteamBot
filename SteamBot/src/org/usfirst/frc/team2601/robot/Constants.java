@@ -40,6 +40,7 @@ public class Constants {
 	public final static int frontCamB = 7;
 	public final static int backCamB = 8;
 	public final static int moveToShootB = 11;
+	public final static int gearLoadB = 12;
 	
 	//Operator Buttons
 	public final static int gearB = 10;

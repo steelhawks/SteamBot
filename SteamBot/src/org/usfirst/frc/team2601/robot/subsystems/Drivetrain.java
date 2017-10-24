@@ -64,8 +64,8 @@ public class Drivetrain extends Subsystem {
 	public AHRS gyro = new AHRS(SPI.Port.kMXP);
 	double gyroRate;
 	double gyroAngle;
-	double kP = 0.03;// forward             -0.095-alpha
-	double kPb = 0.015;//0.07-alpha;// back
+	double kP = -0.011875;//-alpha//-0.095
+	double kPb = 0.07;//-alpha;// back
 	// more increase kp more left
 	// more decrease kp more right
 
@@ -174,7 +174,7 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("RightEncDist", rightEncDist);
 
 		// Output shift value to SD
-		SmartDashboard.putBoolean("Low Gear?", gear);
+		SmartDashboard.putBoolean("High Gear", gear);
 	}
 
 	// Method to shift
@@ -203,8 +203,31 @@ public class Drivetrain extends Subsystem {
 		System.out.println("Straight");
 		System.out.println(gyroAngle);
 		// double newK = SmartDashboard.getDouble("kP");
-		//drive.drive(-0.75, gyroAngle * kP);// *newkP);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-		drive.drive(0.75, gyroAngle * kP);
+		drive.drive(-0.75, gyroAngle * kP);// *newkP);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		//drive.drive(0.75, gyroAngle * kP);
+		matchMotors(frontLeftMotor, backLeftMotor);
+		// matchMotors(frontLeftMotor, middleLeftMotor);
+		matchMotors(frontRightMotor, backRightMotor);
+		// matchMotors(frontRightMotor, middleRightMotor);
+
+		if (leftEncDist > leftDist && -rightEncDist > rightDist) {
+			constants.ultraBool = true;
+		}
+		if (leftEncDist <= leftDist && -rightEncDist <= rightDist) {
+			constants.ultraBool = false;
+		}
+
+	}
+	public void EncGyroForwardSlow(double leftDist, double rightDist) {
+		gyroAngle = gyro.getAngle();
+		
+		leftEncDist = leftEnc.getDistance();
+		rightEncDist = rightEnc.getDistance();
+		//System.out.println("Straight");
+		//System.out.println(gyroAngle);
+		// double newK = SmartDashboard.getDouble("kP");
+		drive.drive(-0.35, gyroAngle * kP);// *newkP);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		//drive.drive(0.75, gyroAngle * kP);
 		matchMotors(frontLeftMotor, backLeftMotor);
 		// matchMotors(frontLeftMotor, middleLeftMotor);
 		matchMotors(frontRightMotor, backRightMotor);
@@ -225,8 +248,8 @@ public class Drivetrain extends Subsystem {
 		leftEncDist = leftEnc.getDistance();
 		rightEncDist = rightEnc.getDistance();
 
-		//drive.drive(0.5, gyroAngle * kPb);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-		drive.drive(-0.5, gyroAngle*kPb);
+		drive.drive(0.5, gyroAngle * kPb);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		//drive.drive(-0.5, gyroAngle*kPb);
 		matchMotors(frontLeftMotor, backLeftMotor);
 		// matchMotors(frontLeftMotor, middleLeftMotor);
 		matchMotors(frontRightMotor, backRightMotor);
@@ -317,8 +340,8 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("RightEncDist", rightEncDist);
 
 		if (-leftEncDist + 50 < lDistance && rightEncDist + 50 < rDistance) {
-			frontLeftMotor.set(0.75);
-			frontRightMotor.set(-0.75);
+			frontLeftMotor.set(-0.75);
+			frontRightMotor.set(0.75);
 			matchMotors(frontLeftMotor, backLeftMotor);
 			matchMotors(frontLeftMotor, middleLeftMotor);
 			matchMotors(frontRightMotor, backRightMotor);
@@ -348,8 +371,8 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("RightEncDist", rightEncDist);
 
 		if (leftEncDist + 50 < distance && -rightEncDist + 50 < distance) {
-			frontLeftMotor.set(-0.5);
-			frontRightMotor.set(0.5);
+			frontLeftMotor.set(0.5);
+			frontRightMotor.set(-0.5);
 			matchMotors(frontLeftMotor, backLeftMotor);
 			matchMotors(frontLeftMotor, middleLeftMotor);
 			matchMotors(frontRightMotor, backRightMotor);
@@ -403,7 +426,7 @@ public class Drivetrain extends Subsystem {
 
 	// Turns robot based on gyro angle
 	public void GyroTurnRight(double angle) {
-		gyroAngle = gyro.getAngle() + 5;
+		gyroAngle = gyro.getAngle() + 9;
 
 		double gyroAngleUse = gyroAngle + angle;
 
@@ -431,7 +454,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	public void GyroTurnLeft(double angle) {
-		gyroAngle = gyro.getAngle() - 5;
+		gyroAngle = gyro.getAngle() - 9;
 
 		if (gyroAngle <= angle) {
 			frontLeftMotor.set(0);

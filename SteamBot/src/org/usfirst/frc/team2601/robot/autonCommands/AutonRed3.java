@@ -37,7 +37,7 @@ public class AutonRed3 extends CommandGroup {
     	addSequential(new Shift());
     	Robot.drivetrain.gyro.reset();
     	//addSequential(new TimeDelay(0.25));
-    	addSequential(new GyroTurnLeft(-59.79));
+    	addSequential(new GyroTurnRight(56));
     	addSequential(new Shift());
     	//addSequential(new EncGyroPlease(3601,3480));//3601,3480
     	//addSequential(new EncGyroPlease(2900,2780));//new

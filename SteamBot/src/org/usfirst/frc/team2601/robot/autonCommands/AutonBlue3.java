@@ -29,9 +29,9 @@ public class AutonBlue3 extends CommandGroup {
     	Robot.shooter.PIDAuton = false;
     	Robot.drivetrain.gyro.zeroYaw();
     	addSequential(new Shift());
-    	addSequential(new EncGyroPlease(3704,3584));//10 ft 6
+    	addSequential(new EncGyroPlease(4008,4008));//10 ft 6
     	addSequential(new Shift());
-    	addSequential(new GyroTurnRight(59.79));
+    	addSequential(new GyroTurnLeft(-59.79));
     	addSequential(new Shift());
     	//addSequential(new EncGyroPlease(3601,3480));//3601,3480
     	//addSequential(new EncGyroPlease(2900,2780));//new

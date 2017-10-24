@@ -20,10 +20,17 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2601.robot.autonCommands.AlignGearTest;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonBlue1;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonBlue3;
+import org.usfirst.frc.team2601.robot.autonCommands.AutonBlue3NoHopp;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonBlue2;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed1;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3;
+import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3NoHopp;
 import org.usfirst.frc.team2601.robot.autonCommands.HopperShooter;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos1;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos1HoppBlu;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos2;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos3;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos3HoppRed;
 import org.usfirst.frc.team2601.robot.commands.shooter.ShootPIDAuton;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed2;
@@ -61,7 +68,7 @@ public class Robot extends IterativeRobot {
 
 	//Declare Command based structure classes
     Command autonomousCommand;
-    SendableChooser chooser;
+    SendableChooser<CommandGroup> chooser;
     
 	CANTalon shooterMotor = new CANTalon(6);//8 beta
 	CANTalon shooterMotor2 = new CANTalon(8);//6 beta
@@ -105,26 +112,30 @@ public class Robot extends IterativeRobot {
         //SmartDashboard smartDashboard = new SmartDashboard();
         
      
-        UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
+        //UsbCamera cam0 = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
         //UsbCamera cam1 = CameraServer.getInstance().startAutomaticCapture("cam1", 1);
         //MjpegServer s = CameraServer.getInstance().addServer("gripStream");
         //s.setSource(cam0);
-        cam0.setResolution(640, 480); // look into lowering       
-        //cam1.setExposureManual(10);
-        //cam1.setBrightness(0);
-        
+        //cam0.setResolution(640, 480); // look into lowering       
+        //cam0.setBrightness(100);
+        //cam0.setFPS(14);
         //cam1.setResolution(640, 480);    
         //System.out.println("hello");
         
         
         //Autonomous
         //chooser.addDefault("AlignGearTest", new AlignGearTest());
-        chooser.addObject("AutonRedOne", new AutonRed1());
-        chooser.addObject("AutonRedTwo", new AutonRed2());
-        chooser.addObject("AutonRedThree", new AutonRed3());
-        //chooser.addObject("AutonBluOne", new AutonBlue1());
-        //chooser.addObject("AutonBluTwo", new AutonBlue2());
-        //chooser.addObject("AutonBluThree", new AutonBlue3());
+        chooser.addObject("PosOne", new Pos1());
+        chooser.addObject("PosTwo", new Pos2());
+        chooser.addObject("PosThree", new Pos3());
+        /*chooser.addObject("BluOne", new AutonBlue1());
+        chooser.addObject("BluTwo", new AutonBlue2());
+        chooser.addObject("BluThree", new AutonBlue3());
+        chooser.addObject("RedThreeNoHopper", new AutonRed3NoHopp());
+        chooser.addObject("BluThreeNoHopper", new AutonBlue3NoHopp());*/
+        //chooser.addObject("Pos3HoppRed", new Pos3NoHoppRed());
+        //chooser.addObject("Pos1HoppBlue", new Pos1NoHoppBlu());
+        chooser.addObject("HopperShooter", new HopperShooter());
         SmartDashboard.putData("Auto mode", chooser);
         System.out.println("hi");
     }	
@@ -152,15 +163,18 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-       // autonomousCommand = (Command) chooser.getSelected();
+        //autonomousCommand = (Command) chooser.getSelected();
         //autonomousCommand = new AutonRed1();
     	//autonomousCommand = new AutonRed2();
     	//autonomousCommand = new AutonRed3();
-        //autonomousCommand = new AutonBlue1();
+    	//autonomousCommand = new AutonBlue1();
         //autonomousCommand = new AutonBlue3();
     	//autonomousCommand = new AutonRed2NOPUSH();
-    	autonomousCommand = new AlignGearTest();
+    	//autonomousCommand = new AlignGearTest();
     	//autonomousCommand = new HopperShooter();
+    	//autonomousCommand = new Pos1();
+    	autonomousCommand = new Pos2();
+    	//autonomousCommand = new Pos3();
     	autonomousCommand.start();
         //SmartDashboard.putData("Auto mode", chooser);
     	shooterMotor.setF(0);
@@ -217,6 +231,10 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+       
+        SmartDashboard.putNumber("ir1", Robot.gear.ir1.getValue());
+ 	   	SmartDashboard.putNumber("ir2", Robot.gear.ir2.getValue());
+     
         
         if (Constants.oJS.getRawButton(1)) {
         	//agitatorMotor.set(1);

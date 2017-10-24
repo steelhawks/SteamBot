@@ -1,6 +1,10 @@
 package org.usfirst.frc.team2601.robot;
 
+import org.usfirst.frc.team2601.robot.autonCommands.MoveGearLoad;
 import org.usfirst.frc.team2601.robot.autonCommands.MoveToShoot;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos1;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos2;
+import org.usfirst.frc.team2601.robot.autonCommands.Pos3;
 import org.usfirst.frc.team2601.robot.commands.EncoderHolder;
 import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
 import org.usfirst.frc.team2601.robot.commands.climber.ClimbButton;
@@ -49,6 +53,9 @@ public class OI {
     	
     	Button reverse = new JoystickButton(constants.dJS, constants.reverseB);
     	reverse.whenPressed(new ReverseDirection());
+    	
+    	Button gearLoad = new JoystickButton (constants.dJS, constants.gearLoadB);
+    	gearLoad.whenPressed(new MoveGearLoad());
     	    	
     	//Operator Controls
     	Button gear = new JoystickButton(constants.oJS, constants.gearB);
@@ -80,6 +87,16 @@ public class OI {
     	//climb.whileActive(new ClimbButton());
     	climb.whenActive(new ClimbButton());
     	climb.whenInactive(new ClimbButtonStop());
+    	
+    	/*Button pos1 = new JoystickButton(constants.dJS, 7);
+    	pos1.whenPressed(new Pos1());
+    	
+    	Button pos2 = new JoystickButton(constants.dJS, 8);
+    	pos2.whenPressed(new Pos2());
+    	
+    	Button pos3 = new JoystickButton(constants.dJS, 9);
+    	pos3.whenPressed(new Pos3());
+    	 */   	
     	
     	}
 	
