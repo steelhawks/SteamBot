@@ -21,9 +21,9 @@ public class Constants {
 		}
 		return instance;
 	}
-	
+
 	public static boolean alpha = true;
-	
+	public static boolean operatorJS = true;//if using joystick for operating
 	//Joysticks
 	public final static int dJSPort = 0;
 	public final static int oJSPort = 1;
@@ -43,14 +43,13 @@ public class Constants {
 	public final static int gearLoadB = 12;
 	
 	//Operator Buttons
-	public final static int gearB = 10;
-	public final static int stopShootB = 15;
-	public final static int shootB = 5;//NOT USED
-	public final static int pushGearB = 4;
-	public final static int gearPanelB = 6;
-	public final static int climbB = 5;
-	public final static int hopperB = 8;
-	
+		public static int gearB;// = 10;
+		public static int stopShootB;// = 15;
+		public static int shootB;// = 5;//NOT USED
+		public static int pushGearB;/// = 4;
+		public static int gearPanelB; //= 6;
+		public static int climbB; //= 5;
+		public static int hopperB;//= 8;
 	
 	//drivetrain motors
 	public final static int frontLeftM = 0;
@@ -121,4 +120,24 @@ public class Constants {
 	public final static int backCam = 1;
 	public final static int camQuality = 60;
 	public final static int camServo = 5;
+public Constants(){
+	//Operator Buttons
+		if(operatorJS == false){
+			gearB = 10;
+			stopShootB = 15;
+			shootB = 5;//NOT USED
+			pushGearB = 4;
+			gearPanelB = 6;
+			climbB = 5;
+			hopperB = 8;
+		}else{
+			gearB = 11;//OPEN AND CLOSES HOCKEY STICKS
+			stopShootB = 25;
+			shootB = 25;//NOT USED
+			pushGearB = 12;//CONTROLS PUSHER
+			gearPanelB = 9;//CONTROLS PANEL
+			climbB = 1;//controsls climber
+			hopperB = 28;
+		}	
+	}
 }
