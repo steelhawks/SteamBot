@@ -36,7 +36,7 @@ public class OI {
 		//Get constants
 		Constants constants = Constants.getInstance();
 		
-		//Instantiate joysticks and buttonboard
+		//Instantiate Joysticks and Buttonboard
 		constants.dJS = new Joystick(constants.dJSPort);
 		constants.oJS = new Joystick(constants.oJSPort);
 		constants.randJS = new Joystick(constants.randP);
