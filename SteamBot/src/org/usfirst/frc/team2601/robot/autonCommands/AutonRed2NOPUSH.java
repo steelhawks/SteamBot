@@ -2,7 +2,7 @@ package org.usfirst.frc.team2601.robot.autonCommands;
 
 import org.usfirst.frc.team2601.robot.Robot;
 import org.usfirst.frc.team2601.robot.commands.TimeDelay;
-import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
+//import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.AutonForwardUltra;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.AutonGyroForwardUltra;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPlease;

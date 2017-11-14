@@ -11,11 +11,9 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.usfirst.frc.team2601.robot.Constants;
 import org.usfirst.frc.team2601.robot.Robot;
-import org.usfirst.frc.team2601.robot.commands.camera.CamServo;
+//import org.usfirst.frc.team2601.robot.commands.camera.CamServo;
 
-import com.ctre.CANTalon;
-import com.ni.vision.NIVision;
-import com.ni.vision.NIVision.Image;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -27,24 +25,24 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.networktables2.type.NumberArray;
+import edu.wpi.first.networktables.*;
+//import edu.wpi.first.wpilibj.networktables2.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
+//import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
 /**
  *
  */
-//stean
-public class Camera extends Subsystem {
+//public class Camera extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	
+	/*
 	Constants constants = Constants.getInstance();
+	NetworkTableInstance server = NetworkTableInstance.getDefault();
 	
 	//Camera servo
-	Servo servo = new Servo(constants.camServo);
+	/*Servo servo = new Servo(constants.camServo);
 	
 	public boolean align = false;
 	public ArrayList<Double> k = new ArrayList<Double>(2);
@@ -77,7 +75,8 @@ public class Camera extends Subsystem {
     
     //Vision
     public void getGearPosition(){
-    	NetworkTable server = NetworkTable.getTable("GRIP/myContoursReport");
+    	//NetworkTable server = NetworkTable.getTable("GRIP/myContoursReport");
+    	server.getTable("GRIP/myContoursReport");
     	
     	
     	Double[] smth = new Double[2];
@@ -88,7 +87,7 @@ public class Camera extends Subsystem {
 		Double[] xValues = new Double[2];
 		Double[] height = new Double[xValues.length];
 		//19.5 cm
-		try{
+		/*try{
 			//int contoursFound = 
 			//Imgproc.boundingRect(points)
     		xValues = server.getNumberArray("centerX", smth);
@@ -99,8 +98,8 @@ public class Camera extends Subsystem {
     	catch(TableKeyNotDefinedException exp){
     		//System.out.println("No Values");
     		//throw exp;
-    	}
-		
+    	}*/   
+		/*
 			try{
 				
 				//System.out.println("PAST IF");
@@ -119,7 +118,7 @@ public class Camera extends Subsystem {
 			        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
 			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
 					}
-					else{*/
+					else{*//*
 						Robot.drivetrain.frontLeftMotor.set(-0.15);//-0.15
 						Robot.drivetrain.frontRightMotor.set(-0.15);
 			    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
@@ -139,16 +138,15 @@ public class Camera extends Subsystem {
 			        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
 			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
 					}
-					else{*/
-						Robot.drivetrain.frontLeftMotor.set(0.15);//0.15
-						Robot.drivetrain.frontRightMotor.set(0.15);
-			    		matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);
+					else{*//*
+						//Robot.drivetrain.frontLeftMotor.set(0.15);//0.15
+						//Robot.drivetrain.frontRightMotor.set(0.15);
+			    		//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.backLeftMotor);*/
 			        	//matchMotors(Robot.drivetrain.frontLeftMotor, Robot.drivetrain.middleLeftMotor);
-			        	matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
+			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.backRightMotor);
 			        	//matchMotors(Robot.drivetrain.frontRightMotor, Robot.drivetrain.middleRightMotor);
-					//}
-			       		
-			    	align = false;
+					//}			       		
+			    	/*align = false;
 			    }else if((mid >= (gearMid + offset) || mid >= (gearMid - offset) || gearMid == mid)){
 					Robot.drivetrain.frontLeftMotor.set(0);
 					Robot.drivetrain.frontRightMotor.set(0);
@@ -167,7 +165,7 @@ public class Camera extends Subsystem {
 			
 			i++;
 			Timer.delay(0.05);
-	}
+	}*/
     
     /*
     public void enableVisionThread(){
@@ -244,8 +242,8 @@ public class Camera extends Subsystem {
     	
     }
     */
-    private void matchMotors(CANTalon leader, CANTalon follower){
-    	follower.set(leader.get());
-    }
+    /*private void matchMotors(TalonSRX leader, TalonSRX follower){
+    	follower.set(leader.get());*/
     
-}
+    
+

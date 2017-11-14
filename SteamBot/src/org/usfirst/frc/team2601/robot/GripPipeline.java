@@ -26,7 +26,7 @@ import org.opencv.objdetect.*;
 public class GripPipeline {
 
 	//Outputs
-	private Mat blurOutput = new Mat();
+	/*private Mat blurOutput = new Mat();
 	private Mat hsvThresholdOutput = new Mat();
 	private Mat cvErodeOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
@@ -39,7 +39,7 @@ public class GripPipeline {
 	/**
 	 * This is the primary method that runs the entire pipeline and updates the outputs.
 	 */
-	public void process(Mat source0) {
+	/*public void process(Mat source0) {
 		// Step Blur0:
 		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Box Blur");
@@ -88,14 +88,14 @@ public class GripPipeline {
 	 * This method is a generated getter for the output of a Blur.
 	 * @return Mat output from Blur.
 	 */
-	public Mat blurOutput() {
+	/*public Mat blurOutput() {
 		return blurOutput;
 	}
 
 	/**
 	 * This method is a generated getter for the output of a HSV_Threshold.
 	 * @return Mat output from HSV_Threshold.
-	 */
+	 *//*
 	public Mat hsvThresholdOutput() {
 		return hsvThresholdOutput;
 	}
@@ -104,15 +104,15 @@ public class GripPipeline {
 	 * This method is a generated getter for the output of a CV_erode.
 	 * @return Mat output from CV_erode.
 	 */
-	public Mat cvErodeOutput() {
+	/*public Mat cvErodeOutput() {
 		return cvErodeOutput;
-	}
+	}*/
 
 	/**
 	 * This method is a generated getter for the output of a Find_Contours.
 	 * @return ArrayList<MatOfPoint> output from Find_Contours.
 	 */
-	public ArrayList<MatOfPoint> findContoursOutput() {
+	/*public ArrayList<MatOfPoint> findContoursOutput() {
 		return findContoursOutput;
 	}
 
@@ -120,7 +120,7 @@ public class GripPipeline {
 	 * This method is a generated getter for the output of a Filter_Contours.
 	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
 	 */
-	public ArrayList<MatOfPoint> filterContoursOutput() {
+	/*public ArrayList<MatOfPoint> filterContoursOutput() {
 		return filterContoursOutput;
 	}
 
@@ -129,7 +129,7 @@ public class GripPipeline {
 	 * An indication of which type of filter to use for a blur.
 	 * Choices are BOX, GAUSSIAN, MEDIAN, and BILATERAL
 	 */
-	enum BlurType{
+	/*enum BlurType{
 		BOX("Box Blur"), GAUSSIAN("Gaussian Blur"), MEDIAN("Median Filter"),
 			BILATERAL("Bilateral Filter");
 
@@ -158,7 +158,7 @@ public class GripPipeline {
 		public String toString() {
 			return this.label;
 		}
-	}
+	}*/
 
 	/**
 	 * Softens an image using one of several filters.
@@ -166,7 +166,7 @@ public class GripPipeline {
 	 * @param type The blurType to perform.
 	 * @param doubleRadius The radius for the blur.
 	 * @param output The image in which to store the output.
-	 */
+	 *//*
 	private void blur(Mat input, BlurType type, double doubleRadius,
 		Mat output) {
 		int radius = (int)(doubleRadius + 0.5);
@@ -198,13 +198,13 @@ public class GripPipeline {
 	 * @param sat The min and max saturation
 	 * @param val The min and max value
 	 * @param output The image in which to store the output.
-	 */
+	 *//*
 	private void hsvThreshold(Mat input, double[] hue, double[] sat, double[] val,
 	    Mat out) {
 		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HSV);
 		Core.inRange(out, new Scalar(hue[0], sat[0], val[0]),
 			new Scalar(hue[1], sat[1], val[1]), out);
-	}
+	}*/
 
 	/**
 	 * Expands area of lower value in an image.
@@ -215,7 +215,7 @@ public class GripPipeline {
 	 * @param borderType pixel extrapolation method.
 	 * @param borderValue value to be used for a constant border.
 	 * @param dst Output Image.
-	 */
+	 *//*
 	private void cvErode(Mat src, Mat kernel, Point anchor, double iterations,
 		int borderType, Scalar borderValue, Mat dst) {
 		if (kernel == null) {
@@ -228,7 +228,7 @@ public class GripPipeline {
 			borderValue = new Scalar(-1);
 		}
 		Imgproc.erode(src, dst, kernel, anchor, (int)iterations, borderType, borderValue);
-	}
+	}*/
 
 	/**
 	 * Sets the values of pixels in a binary image to their distance to the nearest black pixel.
@@ -236,7 +236,7 @@ public class GripPipeline {
 	 * @param type The Transform.
 	 * @param maskSize the size of the mask.
 	 * @param output The image in which to store the output.
-	 */
+	 *//*
 	private void findContours(Mat input, boolean externalOnly,
 		List<MatOfPoint> contours) {
 		Mat hierarchy = new Mat();
@@ -250,7 +250,7 @@ public class GripPipeline {
 		}
 		int method = Imgproc.CHAIN_APPROX_SIMPLE;
 		Imgproc.findContours(input, contours, hierarchy, mode, method);
-	}
+	}*/
 
 
 	/**
@@ -269,7 +269,7 @@ public class GripPipeline {
 	 * @param minRatio minimum ratio of width to height
 	 * @param maxRatio maximum ratio of width to height
 	 */
-	private void filterContours(List<MatOfPoint> inputContours, double minArea,
+	/*private void filterContours(List<MatOfPoint> inputContours, double minArea,
 		double minPerimeter, double minWidth, double maxWidth, double minHeight, double
 		maxHeight, double[] solidity, double maxVertexCount, double minVertexCount, double
 		minRatio, double maxRatio, List<MatOfPoint> output) {
@@ -297,12 +297,12 @@ public class GripPipeline {
 			if (contour.rows() < minVertexCount || contour.rows() > maxVertexCount)	continue;
 			final double ratio = bb.width / (double)bb.height;
 			if (ratio < minRatio || ratio > maxRatio) continue;
-			output.add(contour);
-		}
+			output.add(contour);*/
+		
 	}
 
 
 
 
-}
+
 

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class CamServo extends Command {
+/*public class CamServo extends Command {
 
 	Constants constants = Constants.getInstance();
 	
@@ -40,4 +40,5 @@ public class CamServo extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-}
+}*/
+

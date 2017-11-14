@@ -3,7 +3,7 @@ package org.usfirst.frc.team2601.robot.autonCommands;
 import org.usfirst.frc.team2601.robot.Robot;
 import org.usfirst.frc.team2601.robot.commands.TimeDelay;
 import org.usfirst.frc.team2601.robot.commands.WaitTime;
-import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
+//import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPlease;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPleaseBack;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPleaseSlow;

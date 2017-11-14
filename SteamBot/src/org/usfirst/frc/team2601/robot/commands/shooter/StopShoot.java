@@ -3,7 +3,7 @@ package org.usfirst.frc.team2601.robot.commands.shooter;
 import org.usfirst.frc.team2601.robot.Constants;
 import org.usfirst.frc.team2601.robot.Robot;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 

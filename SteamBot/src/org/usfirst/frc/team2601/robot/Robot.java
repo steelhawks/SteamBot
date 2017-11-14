@@ -35,17 +35,17 @@ import org.usfirst.frc.team2601.robot.commands.shooter.ShootPIDAuton;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed3;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed2;
 import org.usfirst.frc.team2601.robot.autonCommands.AutonRed2NOPUSH;
-import org.usfirst.frc.team2601.robot.subsystems.Camera;
+//import org.usfirst.frc.team2601.robot.subsystems.Camera;
 import org.usfirst.frc.team2601.robot.subsystems.Climber;
 import org.usfirst.frc.team2601.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2601.robot.subsystems.Gear;
 import org.usfirst.frc.team2601.robot.subsystems.Shooter;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
+//import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;	
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 	//Instantiate Subsystems
 	public static final Drivetrain drivetrain = new Drivetrain();
 	public static OI oi;
-	public static final Camera camera = new Camera();
+	//public static final Camera camera = new Camera();
 	public static final Gear gear = new Gear();
 	public static final Shooter shooter = new Shooter();
 	public static final Climber climber = new Climber();
@@ -70,9 +70,9 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser<CommandGroup> chooser;
     
-	CANTalon shooterMotor = new CANTalon(6);//8 beta
-	CANTalon shooterMotor2 = new CANTalon(8);//6 beta
-	CANTalon agitatorMotor = new CANTalon(10);
+	TalonSRX shooterMotor = new TalonSRX(6);//8 beta
+	TalonSRX shooterMotor2 = new TalonSRX(8);//6 beta
+	TalonSRX agitatorMotor = new TalonSRX(10);
     
 
     /**
@@ -80,11 +80,11 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	shooterMotor2.changeControlMode(CANTalon.TalonControlMode.Follower);
+    	shooterMotor2.changeControlMode(TalonSRX.TalonControlMode.Follower);
     	shooterMotor2.set(shooterMotor.getDeviceID());
     	
-    	shooterMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	shooterMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	shooterMotor.changeControlMode(TalonSRX.TalonControlMode.Speed);
+    	shooterMotor.setFeedbackDevice(TalonSRX.FeedbackDevice.QuadEncoder);
     	shooterMotor.setCloseLoopRampRate(0);
     	shooterMotor.reverseSensor(true);
     	shooterMotor.configEncoderCodesPerRev(12);

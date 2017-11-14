@@ -3,22 +3,23 @@ package org.usfirst.frc.team2601.robot.subsystems;
 import org.usfirst.frc.team2601.robot.Constants;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.ArcadeDrive;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.MotorControl.GroupMotorControllers;
+import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -33,21 +34,22 @@ public class Drivetrain extends Subsystem {
 	public static int reverse = 1;
 
 	// Instantiate Drive Motor Controllers
-	public CANTalon frontLeftMotor = new CANTalon(constants.frontLeftM);
-	public CANTalon middleLeftMotor = new CANTalon(constants.middleLeftM);
-	public CANTalon backLeftMotor = new CANTalon(constants.backLeftM);
-	public CANTalon frontRightMotor = new CANTalon(constants.frontRightM);
-	public CANTalon middleRightMotor = new CANTalon(constants.middleRightM);
-	public CANTalon backRightMotor = new CANTalon(constants.backRightM);
+	public MyTalonSRX frontLeftMotor = new MyTalonSRX(constants.frontLeftM);
+	public MyTalonSRX middleLeftMotor = new MyTalonSRX(constants.middleLeftM);
+	public MyTalonSRX backLeftMotor = new MyTalonSRX(constants.backLeftM);
+	public MyTalonSRX frontRightMotor = new MyTalonSRX(constants.frontRightM);
+	public MyTalonSRX middleRightMotor = new MyTalonSRX(constants.middleRightM);
+	public MyTalonSRX backRightMotor = new MyTalonSRX(constants.backRightM);
+	SpeedControllerGroup left = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
+	SpeedControllerGroup right = new SpeedControllerGroup(frontRightMotor, backRightMotor);
 
 	// DoubleSolenoid rightShift = new
 	// DoubleSolenoid(constants.shootShieldSolOn,constants.shootShieldSolOff);
 	public DoubleSolenoid driveShift = new DoubleSolenoid(constants.driveSolOn, constants.driveSolOff);
 	// Declare Robot drive
-	RobotDrive drive = new RobotDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+	DifferentialDrive drive = new DifferentialDrive(left, right);
 	double leftMotorC;
 	double rightMotorC;
-
 	
 	
 	// Ultrasonics
@@ -89,16 +91,16 @@ public class Drivetrain extends Subsystem {
 		// Shifter
 		driveShift.set(DoubleSolenoid.Value.kReverse);
 		/*
-		 * backLeftMotor.changeControlMode(CANTalon.TalonControlMode.Follower);
+		 * backLeftMotor.changeControlMode(TalonSRX.TalonControlMode.Follower);
 		 * backLeftMotor.set(frontLeftMotor.getDeviceID());
 		 * 
-		 * middleLeftMotor.changeControlMode(CANTalon.TalonControlMode.Follower)
+		 * middleLeftMotor.changeControlMode(TalonSRX.TalonControlMode.Follower)
 		 * ; middleLeftMotor.set(frontLeftMotor.getDeviceID());
 		 * 
-		 * backRightMotor.changeControlMode(CANTalon.TalonControlMode.Follower);
+		 * backRightMotor.changeControlMode(TalonSRX.TalonControlMode.Follower);
 		 * backRightMotor.set(frontRightMotor.getDeviceID());
 		 * 
-		 * middleRightMotor.changeControlMode(CANTalon.TalonControlMode.Follower
+		 * middleRightMotor.changeControlMode(TalonSRX.TalonControlMode.Follower
 		 * ); middleRightMotor.set(frontRightMotor.getDeviceID());
 		 */
 
@@ -131,7 +133,7 @@ public class Drivetrain extends Subsystem {
 	}
 
 	// Matches drive motors
-	private void matchMotors(CANTalon leader, CANTalon follower) {
+	private void matchMotors(TalonSRX leader, TalonSRX follower) {
 		follower.set(leader.get());
 	}
 
@@ -152,8 +154,8 @@ public class Drivetrain extends Subsystem {
 		matchMotors(frontRightMotor, middleRightMotor);
 
 		// Output Motor voltage to SD
-		SmartDashboard.putDouble("frontLeftMotorVoltage", frontLeftMotor.getOutputCurrent());
-		SmartDashboard.putDouble("frontRightMotorVoltage", frontRightMotor.getOutputCurrent());
+		SmartDashboard.putNumber("frontLeftMotorVoltage", frontLeftMotor.getOutputCurrent());
+		SmartDashboard.putNumber("frontRightMotorVoltage", frontRightMotor.getOutputCurrent());
 
 		
 		gyroAngle = gyro.getAngle();
@@ -176,7 +178,7 @@ public class Drivetrain extends Subsystem {
 		// Output shift value to SD
 		SmartDashboard.putBoolean("High Gear", gear);
 	}
-
+	
 	// Method to shift
 	public void shiftGears() {
 		if (driveShift.get() == DoubleSolenoid.Value.kForward) {
@@ -195,6 +197,16 @@ public class Drivetrain extends Subsystem {
 		// driveShift.set(rightShift.get());
 	}
 
+	public void moveForwardTimer() {
+		frontLeftMotor.set(1.0);
+		frontRightMotor.set(-1.0);
+		
+		matchMotors(frontLeftMotor,backLeftMotor);
+		matchMotors(frontLeftMotor, middleLeftMotor);
+		matchMotors(frontRightMotor,backRightMotor);
+		matchMotors(frontRightMotor, middleRightMotor);
+	}
+	
 	public void EncGyroForward(double leftDist, double rightDist) {
 		gyroAngle = gyro.getAngle();
 
@@ -203,7 +215,7 @@ public class Drivetrain extends Subsystem {
 		System.out.println("Straight");
 		System.out.println(gyroAngle);
 		// double newK = SmartDashboard.getDouble("kP");
-		drive.drive(-0.75, gyroAngle * kP);// *newkP);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		drive.tankDrive(-0.75, gyroAngle * kP);// *newkP);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 		//drive.drive(0.75, gyroAngle * kP);
 		matchMotors(frontLeftMotor, backLeftMotor);
 		// matchMotors(frontLeftMotor, middleLeftMotor);
@@ -226,7 +238,7 @@ public class Drivetrain extends Subsystem {
 		//System.out.println("Straight");
 		//System.out.println(gyroAngle);
 		// double newK = SmartDashboard.getDouble("kP");
-		drive.drive(-0.35, gyroAngle * kP);// *newkP);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		drive.tankDrive(-0.35, gyroAngle * kP);// *newkP);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 		//drive.drive(0.75, gyroAngle * kP);
 		matchMotors(frontLeftMotor, backLeftMotor);
 		// matchMotors(frontLeftMotor, middleLeftMotor);
@@ -248,7 +260,7 @@ public class Drivetrain extends Subsystem {
 		leftEncDist = leftEnc.getDistance();
 		rightEncDist = rightEnc.getDistance();
 
-		drive.drive(0.5, gyroAngle * kPb);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+		drive.tankDrive(0.5, gyroAngle * kPb);//ALPHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 		//drive.drive(-0.5, gyroAngle*kPb);
 		matchMotors(frontLeftMotor, backLeftMotor);
 		// matchMotors(frontLeftMotor, middleLeftMotor);
@@ -267,7 +279,7 @@ public class Drivetrain extends Subsystem {
 	public void forwardGyroUltra(double distance) {
 		gyroAngle = gyro.getAngle();
 		gearUltraValue = gearUltra.getRangeInches();
-		drive.drive(-0.5, gyroAngle * kP);
+		drive.tankDrive(-0.5, gyroAngle * kP);
 		matchMotors(frontLeftMotor, backLeftMotor);
 		matchMotors(frontLeftMotor, middleLeftMotor);
 		matchMotors(frontRightMotor, backRightMotor);

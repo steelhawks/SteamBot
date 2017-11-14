@@ -5,9 +5,8 @@ import org.usfirst.frc.team2601.robot.Robot;
 import org.usfirst.frc.team2601.robot.commands.climber.Climb;
 import org.usfirst.frc.team2601.robot.commands.climber.ClimbButton;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
-
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
+import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -19,8 +18,8 @@ public class Climber extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	Constants constants = Constants.getInstance();
-	CANTalon climberM = new CANTalon(constants.climbM);
-	CANTalon climberM2 = new CANTalon(constants.climbM2);
+	TalonSRX climberM = new TalonSRX(constants.climbM);
+	TalonSRX climberM2 = new TalonSRX(constants.climbM2);
 	
 	
 	
@@ -63,7 +62,7 @@ public class Climber extends Subsystem {
     	//climberM.set(0);
     	climberM2.set(0);
     }
-    private void matchMotors(CANTalon leader, CANTalon follower){
+    private void matchMotors(TalonSRX leader, TalonSRX follower){
     	follower.set(leader.get());
     }    
 }

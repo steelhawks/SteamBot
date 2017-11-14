@@ -2,7 +2,7 @@ package org.usfirst.frc.team2601.robot.autonCommands;
 
 import org.usfirst.frc.team2601.robot.Robot;
 import org.usfirst.frc.team2601.robot.commands.TimeDelay;
-import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
+//import org.usfirst.frc.team2601.robot.commands.camera.AlignGear;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.AutonForwardUltra;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.AutonGyroForwardUltra;
 import org.usfirst.frc.team2601.robot.commands.drivetrain.EncGyroPlease;
@@ -42,9 +42,9 @@ public class AutonRed2 extends CommandGroup {
     	//addSequential(new EncGyroPlease(2200,2200));//Beta
     	addSequential(new Shift());
     	addSequential(new TimeDelay(0.5));
-    	addSequential(new AlignGear());//new*/
+    	//addSequential(new AlignGear());//new*/
     	addSequential(new Shift());
-    	addSequential(new AlignGear());//new
+    	//addSequential(new AlignGear());//new
     	addSequential(new EncGyroPlease(401,400));//new
     	addSequential(new GearPiston());//swapped
     	addSequential(new TimeDelay(0.5));

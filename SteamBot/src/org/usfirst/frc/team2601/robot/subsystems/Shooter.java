@@ -6,8 +6,8 @@ import org.usfirst.frc.team2601.robot.commands.EncoderHolder;
 import org.usfirst.frc.team2601.robot.commands.shooter.SetFullSpeed;
 import org.usfirst.frc.team2601.robot.commands.shooter.Shoot;
 
-import com.ctre.CANTalon;
-import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.phoenix.MotorControl.CAN.TalonSRX;
+import com.ctre.phoenix.MotorControl.SmartMotorController.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
@@ -31,9 +31,9 @@ public class Shooter extends Subsystem {
 	Constants constants = Constants.getInstance();
 	
 	//Instantiate the motors for shooter and conveyor belt
-	public CANTalon shooterMotor = new CANTalon(constants.shooterM);
-	public CANTalon shooterMotor2 = new CANTalon(constants.shooterM2);
-	//public CANTalon agitatorMotor = new CANTalon(constants.agitateM);	
+	public TalonSRX shooterMotor = new TalonSRX(constants.shooterM);
+	public TalonSRX shooterMotor2 = new TalonSRX(constants.shooterM2);
+	//public TalonSRX agitatorMotor = new TalonSRX(constants.agitateM);	
 
 	boolean shield;
 	public boolean PIDAuton;
@@ -47,11 +47,11 @@ public class Shooter extends Subsystem {
     //PID CODE FOR SHOOTER
     public Shooter(){
     	
-		shooterMotor2.changeControlMode(CANTalon.TalonControlMode.Follower);
+		shooterMotor2.changeControlMode(TalonSRX.TalonControlMode.Follower);
     	shooterMotor2.set(shooterMotor.getDeviceID());
     	
-    	shooterMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
-    	shooterMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+    	shooterMotor.changeControlMode(TalonSRX.TalonControlMode.Speed);
+    	shooterMotor.setFeedbackDevice(TalonSRX.FeedbackDevice.QuadEncoder);
     	shooterMotor.setCloseLoopRampRate(0);
     	shooterMotor.reverseSensor(true);
     	shooterMotor.configEncoderCodesPerRev(12);
@@ -69,7 +69,7 @@ public class Shooter extends Subsystem {
     	shooterMotor.setSafetyEnabled(false);
     	shooterMotor2.setSafetyEnabled(false);
     	
-    	LiveWindow.addActuator("robot", "Shooter", shooterMotor);
+    	//LiveWindow.addActuator("robot", "Shooter", shooterMotor); Line was giving prolblems and shooter isnt used so its commented
     	
     	PIDAuton = false;
     	//shooterMotor.enable();

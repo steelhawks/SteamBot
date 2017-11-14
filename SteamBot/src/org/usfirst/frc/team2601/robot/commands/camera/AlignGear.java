@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AlignGear extends Command {
+//public class AlignGear extends Command {
 
-    public AlignGear() {
+    /*public AlignGear() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.camera);
@@ -40,4 +40,4 @@ public class AlignGear extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
-}
+}*/
